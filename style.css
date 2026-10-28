@@ -1,0 +1,428 @@
+/* ======================================
+   GLOBAL RESET
+====================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+}
+
+body {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ======================================
+   IPHONE LOCKSCREEN
+====================================== */
+#lockscreen {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+    cursor: pointer;
+}
+
+#lockscreen.slide-up {
+    transform: translateY(-20%);
+    opacity: 0.3;
+}
+
+.lockscreen-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dark-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.45));
+}
+
+.lock-content {
+    position: absolute;
+    top: 17%;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+#lock-symbol {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+#clock {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-weight: 300;
+    font-size: 82px;
+    letter-spacing: -4px;
+}
+
+#date {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: 20px;
+    margin-top: -8px;
+    font-weight: 400;
+}
+
+#swipe-area {
+    position: absolute;
+    bottom: 105px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    z-index: 15;
+}
+
+#swipe-area p {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-size: 18px;
+    opacity: .9;
+    font-weight: 400;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+}
+
+.iphone-bar {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 5px;
+    background: white;
+    border-radius: 20px;
+}
+
+/* ======================================
+   PASSCODE SCREEN
+====================================== */
+#passcode-screen {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    transform: translateY(100%);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#passcode-screen.show {
+    transform: translateY(0);
+}
+
+.passcode-container {
+    position: absolute;
+    top: 14%;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.passcode-container h2 {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 35px;
+}
+
+#password-dots {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 45px;
+}
+
+#password-dots span {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+#password-dots span.active {
+    background: white;
+}
+
+#keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 75px);
+    justify-content: center;
+    gap: 18px;
+}
+
+#keypad button {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, .2);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 32px;
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#keypad button:active {
+    background: white;
+    color: black;
+}
+
+#delete {
+    background: transparent !important;
+    font-size: 25px !important;
+}
+
+.unlock {
+    transform: scale(1.1) !important;
+    opacity: 0 !important;
+}
+
+/* ======================================
+   GALLERY
+====================================== */
+#gallery {
+    position: absolute;
+    inset: 0;
+    display: none;
+    z-index: 1;
+    color: white;
+    overflow: hidden;
+}
+
+#gallery-background {
+    position: absolute;
+    inset: 0;
+    background-image: url("gallery.jpeg");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(.5);
+}
+
+#slides {
+    position: absolute;
+    inset: 0;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.slide.active {
+    display: flex;
+    animation: fade .8s ease;
+}
+
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide img {
+    width: 82%;
+    max-height: 55%;
+    object-fit: contain;
+    border-radius: 20px;
+    animation: zoom 7s infinite alternate;
+}
+
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+/* ======================================
+   ARROWS & COUNTER
+====================================== */
+#previous, #next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    color: white;
+    background: transparent;
+    border: none;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 55px;
+    font-weight: 200;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#previous { left: 25px; }
+#next { right: 25px; }
+
+#counter {
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    z-index: 20;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+/* ======================================
+   PHOTO TEXT
+====================================== */
+.photo-text {
+    position: absolute;
+    bottom: 8%;
+    width: 85%;
+    padding: 22px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.photo-text h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+}
+
+.photo-text p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+/* ======================================
+   FINAL LETTER
+====================================== */
+.final-slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: none;
+    filter: brightness(.6);
+    animation: none;
+}
+
+.birthday-letter {
+    position: relative;
+    z-index: 5;
+    width: 85%;
+    max-height: 75%;
+    overflow-y: auto;
+    padding: 30px 24px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.birthday-letter h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    line-height: 1.3;
+}
+
+.birthday-letter p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+/* ======================================
+   CONFETTI (MASSIVE & BIG)
+====================================== */
+#confetti-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 200;
+}
+
+.confetti {
+    position: absolute;
+    top: -80px;
+    will-change: transform;
+    animation: fall linear forwards;
+    filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.3)); /* Adds depth to bigger confetti */
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-80px) rotate(0deg) translateX(0px);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(55vh) rotate(360deg) translateX(25px); /* Gentle sway */
+    }
+    100% {
+        transform: translateY(115vh) rotate(720deg) translateX(-20px);
+        opacity: 0.9;
+    }
+}
+
+/* ======================================
+   HEARTS
+====================================== */
+.heart {
+    position: absolute;
+    bottom: -40px;
+    color: white;
+    opacity: .5;
+    animation: heartup 8s linear forwards;
+}
+
+@keyframes heartup {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+    }
+    to {
+        transform: translateY(-120vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ======================================
+   PHONE RESPONSIVENESS
+====================================== */
+@media(max-width:430px) {
+    #clock { font-size: 78px; }
+    .photo-text h2 { font-size: 20px; }
+    .photo-text p { font-size: 13.5px; }
+    .birthday-letter h1 { font-size: 22px; }
+    .birthday-letter p { font-size: 13.5px; }
+}
